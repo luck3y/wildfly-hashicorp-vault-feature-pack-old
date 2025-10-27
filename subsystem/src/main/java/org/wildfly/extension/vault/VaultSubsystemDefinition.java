@@ -10,13 +10,13 @@ import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.wildfly.extension.vault.model.VaultConnectionDefinition;
 
 public class VaultSubsystemDefinition extends SimpleResourceDefinition {
-    
+
     public static final VaultSubsystemDefinition INSTANCE = new VaultSubsystemDefinition();
-    
-    public static final RuntimeCapability<Void> VAULT_CAPABILITY =
-            RuntimeCapability.Builder.of("org.wildfly.vault")
-                    .build();
-    
+
+    public static final RuntimeCapability<Void> VAULT_CAPABILITY = RuntimeCapability.Builder
+            .of("org.wildfly.hashicorp-vault")
+            .build();
+
     private VaultSubsystemDefinition() {
         super(new Parameters(VaultExtension.createSubsystemPath(),
                 VaultExtension.getResourceDescriptionResolver())
@@ -24,7 +24,7 @@ public class VaultSubsystemDefinition extends SimpleResourceDefinition {
                 .setRemoveHandler(VaultSubsystemRemove.INSTANCE)
                 .setCapabilities(VAULT_CAPABILITY));
     }
-    
+
     @Override
     public void registerChildren(ManagementResourceRegistration resourceRegistration) {
         resourceRegistration.registerSubModel(VaultConnectionDefinition.INSTANCE);

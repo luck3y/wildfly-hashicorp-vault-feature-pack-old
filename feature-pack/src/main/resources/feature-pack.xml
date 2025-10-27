@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature-pack xmlns="urn:jboss:galleon:feature-pack:3.0"
-              location="org.wildfly.extension:vault-subsystem-feature-pack">
+              location="org.wildfly.extension:hashicorp-vault-subsystem-feature-pack">
     
     <dependencies>
         <dependency location="org.wildfly:wildfly-galleon-pack">
@@ -16,12 +16,12 @@
     
     <config model="domain" name="domain.xml">
         <layers>
-            <include name="vault-layer"/>
+            <include name="hashicorp-vault-layer"/>
         </layers>
     </config>
     
     <default-packages>
-        <package name="org.wildfly.extension.vault"/>
+        <package name="org.wildfly.extension.hashicorp-vault"/>
     </default-packages>
     
     <plugins>

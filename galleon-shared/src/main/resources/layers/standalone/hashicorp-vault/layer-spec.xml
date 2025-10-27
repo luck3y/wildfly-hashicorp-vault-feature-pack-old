@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Copyright The WildFly Authors
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="hashicorp-vault">
+    <props>
+    </props>
+    <dependencies>
+    </dependencies>
+    <feature-group name="wildfly-hashicorp-vault"/>
+</layer-spec>

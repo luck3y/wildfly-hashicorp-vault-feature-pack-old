@@ -4,41 +4,224 @@
   ~ SPDX-License-Identifier: Apache-2.0
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-         http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.wildfly.extension</groupId>
-    <artifactId>vault-subsystem-parent</artifactId>
-    <version>1.0.0</version>
+    <parent>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>49</version>
+    </parent>
+
+    <groupId>org.wildfly</groupId>
+    <artifactId>hashicorp-vault-parent</artifactId>
+    <!--
+    Maintain separation between the artifact id and the version to help prevent
+    merge conflicts between commits changing the GA and those changing the V.
+    -->
+    <version>1.0.0.Alpha-SNAPSHOT</version>
     <packaging>pom</packaging>
-    
+
+    <name>WildFly HashiCorp Vault -- Parent</name>
+    <description>Parent pom for producing a Galleon feature pack for including support for HashiCorp Vault capabilities into a WildFly installation.</description>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <!-- Require Java 17 -->
+        <required.java.build.version>[17,)</required.java.build.version>
+        <required.java.deploy.version>[17,18)</required.java.deploy.version>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.release>17</maven.compiler.release>
+        
+        <module.name>org.wildfly.extension.hashicorp-vault</module.name>
+
+        <assembly.tarLongFileMode>posix</assembly.tarLongFileMode>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.wildfly>36.0.0.Final</version.wildfly>
-        <version.galleon>6.0.0.Final</version.galleon>
+ 
+        <!-- Galleon provisioning settings -->
+        <galleon.fork.embedded>true</galleon.fork.embedded>
+        <galleon.log.time>true</galleon.log.time>
+        <galleon.offline>false</galleon.offline>
+
+        <!-- Plugin dependency versions -->
+        <version.org.jboss.galleon>6.0.6.Final</version.org.jboss.galleon>
+        <version.org.wildfly.galleon-plugins>7.4.0.Final</version.org.wildfly.galleon-plugins>
+        <version.org.wildfly.licenses.plugin>2.4.2.Final</version.org.wildfly.licenses.plugin>
+        <version.org.wildfly.plugins.wildfly-maven-plugin>5.1.3.Final</version.org.wildfly.plugins.wildfly-maven-plugin>
+
+        <!-- Production code dependency versions -->
         <version.vault.java.driver>6.2.0</version.vault.java.driver>
-        <version.jackson>2.15.2</version.jackson>
+        <version.org.apache.maven.plugins.maven-assembly-plugin>3.2.0</version.org.apache.maven.plugins.maven-assembly-plugin>
+        <version.org.wildfly>36.0.1.Final</version.org.wildfly>
+        <version.org.wildfly.common>2.0.1</version.org.wildfly.common>
+        <version.org.wildfly.core>28.0.1.Final</version.org.wildfly.core>
+
+        <!-- Test dependency versions -->
+        <version.junit.junit>4.13.2</version.junit.junit>
+        <version.org.apache.httpcomponents>5.2.1</version.org.apache.httpcomponents>
+        <version.org.jboss.jboss-dmr>1.6.1.Final</version.org.jboss.jboss-dmr>
+        <version.org.jsoup.jsoup>1.15.3</version.org.jsoup.jsoup>
+        <version.shrinkwrap.resolvers>3.1.4</version.shrinkwrap.resolvers>
+        <version.org.wildfly.test>${version.org.wildfly}</version.org.wildfly.test>
+
     </properties>
-    
-    <modules>
-        <module>subsystem</module>
-        <module>feature-pack</module>
-    </modules>
-    
+
+    <!-- NOTE: Only include production code build dependencies here; use testsuite/pom.xml for test
+    dependencies -->
+
     <dependencyManagement>
         <dependencies>
+
             <dependency>
-                <groupId>org.wildfly</groupId>
-                <artifactId>wildfly-parent</artifactId>
-                <version>${version.wildfly}</version>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>hashicorp-vault-galleon-shared</artifactId>
+                <version>${project.version}</version>
                 <type>pom</type>
-                <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>hashicorp-vault-subsystem</artifactId>
+                <version>${project.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wildfly.galleon-plugins</groupId>
+                <artifactId>wildfly-galleon-plugins</artifactId>
+                <version>${version.org.wildfly.galleon-plugins}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wildfly.galleon-plugins</groupId>
+                <artifactId>wildfly-config-gen</artifactId>
+                <version>${version.org.wildfly.galleon-plugins}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
-    
+
+    <modules>
+        <module>galleon-local</module>
+        <module>galleon-shared</module>
+        <module>subsystem</module>
+        <module>feature-pack</module>
+        <!-- <module>testsuite/tck</module> -->
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>wildfly-assembly-plugin</artifactId>
+                    <version>${version.org.apache.maven.plugins.maven-assembly-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version.surefire.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.wildfly.maven.plugins</groupId>
+                    <artifactId>licenses-plugin</artifactId>
+                    <version>${version.org.wildfly.licenses.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.wildfly.galleon-plugins</groupId>
+                    <artifactId>wildfly-galleon-maven-plugin</artifactId>
+                    <version>${version.org.wildfly.galleon-plugins}</version>
+                    <dependencies>
+                        <!-- feature-spec-gen uses wildfly-embedded to generate the feature specs,
+                        hence the designated wildfly-embedded version must match the pack one -->
+                        <dependency>
+                            <groupId>org.wildfly.core</groupId>
+                            <artifactId>wildfly-embedded</artifactId>
+                            <version>${version.org.wildfly.core}</version>
+                        </dependency>
+                        <!-- If you add a dependency on wildfly-embedded you need to bring your own
+                        transitives -->
+                        <dependency>
+                            <groupId>org.wildfly.common</groupId>
+                            <artifactId>wildfly-common</artifactId>
+                            <version>${version.org.wildfly.common}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>${version.org.wildfly.plugins.wildfly-maven-plugin}</version>
+                    <dependencies>
+                        <!-- Control the Galleon dependencies directly -->
+                        <dependency>
+                            <groupId>org.jboss.galleon</groupId>
+                            <artifactId>galleon-api</artifactId>
+                            <version>${version.org.jboss.galleon}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.jboss.galleon</groupId>
+                            <artifactId>galleon-core</artifactId>
+                            <version>${version.org.jboss.galleon}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.jboss.galleon</groupId>
+                            <artifactId>galleon-maven-plugin</artifactId>
+                            <version>${version.org.jboss.galleon}</version>
+                        </dependency>
+                        <dependency>
+
+                            <groupId>org.jboss.galleon</groupId>
+                            <artifactId>galleon-maven-universe</artifactId>
+                            <version>${version.org.jboss.galleon}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
