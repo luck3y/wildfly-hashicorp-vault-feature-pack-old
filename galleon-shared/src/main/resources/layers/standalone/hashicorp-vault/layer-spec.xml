@@ -9,5 +9,5 @@
     </props>
     <dependencies>
     </dependencies>
-    <feature-group name="wildfly-hashicorp-vault"/>
+    <feature-group name="hashicorp-vault"/>
 </layer-spec>

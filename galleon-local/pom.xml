@@ -13,7 +13,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>wildfly-hashicorp-vault-galleon-local</artifactId>
+    <artifactId>hashicorp-vault-galleon-local</artifactId>
     <packaging>pom</packaging>
     <name>Wildfly Hashicorp Vault -- Local Galleon Content</name>
   
