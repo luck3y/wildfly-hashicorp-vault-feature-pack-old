@@ -19,7 +19,6 @@
   
     <description>Galleon content for a feature pack that provides support for Hashicorp Vault</description>
 
-	
     <build>
         <plugins>
          <plugin>

@@ -40,13 +40,13 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.release>17</maven.compiler.release>
-        
+
         <module.name>org.wildfly.extension.hashicorp-vault</module.name>
 
         <assembly.tarLongFileMode>posix</assembly.tarLongFileMode>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
- 
+
         <!-- Galleon provisioning settings -->
         <galleon.fork.embedded>true</galleon.fork.embedded>
         <galleon.log.time>true</galleon.log.time>
@@ -184,7 +184,6 @@
                             <version>${version.org.jboss.galleon}</version>
                         </dependency>
                         <dependency>
-
                             <groupId>org.jboss.galleon</groupId>
                             <artifactId>galleon-maven-universe</artifactId>
                             <version>${version.org.jboss.galleon}</version>
