@@ -17,11 +17,11 @@ import org.jboss.as.version.Stability;
 
 public class VaultExtension implements Extension {
     
-    public static final String SUBSYSTEM_NAME = "vault";
+    public static final String SUBSYSTEM_NAME = "hashicorp-vault";
     public static final String NAMESPACE_1_0 = "urn:wildfly:hashicorp-vault:1.0";
 
     protected static final PathElement SUBSYSTEM_PATH = PathElement.pathElement(SUBSYSTEM, SUBSYSTEM_NAME);
-    private static final Stability FEATURE_STABILITY = Stability.PREVIEW;
+    private static final Stability FEATURE_STABILITY = Stability.EXPERIMENTAL;
     
     private static final ModelVersion CURRENT_MODEL_VERSION = ModelVersion.create(1, 0, 0);
     

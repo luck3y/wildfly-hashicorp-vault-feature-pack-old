@@ -12,24 +12,15 @@
                 <exclude name="docs.licenses.merge"/>
                 <include name="docs"/>
             </packages>
-            <default-configs inherit="true"/>
+            <default-configs inherit="false"/>
         </dependency>
     </dependencies>
     <default-packages>
         <package name="modules.all"/>
+        <package name="docs"/>
         <package name="docs.licenses.merge"/>
     </default-packages>
-    <package-schemas>
-        <group name="org.wildfly"/>
-    </package-schemas>
 
-    <plugins>
-        <plugin artifact="org.wildfly.galleon-plugins:wildfly-galleon-plugins"/>
-    </plugins>
-
-    <system-paths>
-        <system-path path="modules/system/layers/base/"/>
-    </system-paths>
 
     <generate-feature-specs>
         <extensions>
