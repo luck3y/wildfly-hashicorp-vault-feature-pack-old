@@ -13,6 +13,7 @@ import org.jboss.as.controller.SimpleResourceDefinition;
 import org.jboss.as.controller.registry.AttributeAccess;
 import org.jboss.dmr.ModelType;
 import org.wildfly.extension.hashicorp.vault.VaultExtension;
+import org.wildfly.extension.hashicorp.vault.VaultSubsystemRegistrar;
 
 public class VaultConnectionDefinition extends SimpleResourceDefinition {
 
@@ -53,7 +54,7 @@ public class VaultConnectionDefinition extends SimpleResourceDefinition {
         private VaultConnectionDefinition() {
                 super(new Parameters(
                                 VaultExtension.createPath("connection"),
-                                VaultExtension.getResourceDescriptionResolver("connection"))
+                                VaultSubsystemRegistrar.RESOLVER)
                                 .setAddHandler(VaultConnectionAdd.INSTANCE)
                                 .setRemoveHandler(VaultConnectionRemove.INSTANCE));
         }

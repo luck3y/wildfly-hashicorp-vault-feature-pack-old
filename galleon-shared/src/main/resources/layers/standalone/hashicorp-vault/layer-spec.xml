@@ -4,8 +4,10 @@
   ~ SPDX-License-Identifier: Apache-2.0
   -->
 
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="hashicorp-vault-layer">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="hashicorp-vault">
     <props>
+      <prop name="org.wildfly.category" value="HashiCorp Vault"/>
+      <prop name="org.wildfly.description" value="Support for HashiCorp Vault"/>
     </props>
     <dependencies>
     </dependencies>

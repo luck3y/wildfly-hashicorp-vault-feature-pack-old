@@ -120,7 +120,7 @@
         <module>galleon-shared</module>
         <module>subsystem</module>
         <module>feature-pack</module>
-        <!-- <module>testsuite/tck</module> -->
+	<!-- <module>testsuite</module> -->
     </modules>
 
     <build>
