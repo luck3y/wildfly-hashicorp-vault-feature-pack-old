@@ -4,7 +4,6 @@
  */
 package org.wildfly.extension.hashicorp.vault;
 
-import org.jboss.as.controller.ModelVersion;
 import org.jboss.as.controller.ReloadRequiredWriteAttributeHandler;
 import org.jboss.as.controller.SimpleAttributeDefinition;
 import org.jboss.as.controller.SimpleAttributeDefinitionBuilder;
@@ -17,15 +16,53 @@ import org.jboss.dmr.ModelType;
 
 public class VaultSubsystemDefinition extends SimpleResourceDefinition {
 
-    private static final String HOST="host";
-    private static final String NAME="name";
+    static final String HOST="host-name";
+    static final String AUTH_METHOD="auth-method";
+    static final String TLS_VERIFY="tls-verify";
+    static final String TOKEN="token";
+    static final String NAMESPACE="namespace";
 
-    protected static final SimpleAttributeDefinition HOST_NAME =
+    // TODO: add additional attributes for the subsystem here
+    protected static final SimpleAttributeDefinition HOST_NAME_DEF =
             new SimpleAttributeDefinitionBuilder(HOST, ModelType.STRING)
                     .setRequired(false)
-                    .setDefaultValue(new ModelNode("host"))
+                    .setDefaultValue(new ModelNode(HOST))
                     .setAllowExpression(true)
-                    .setXmlName(NAME)
+                    .setXmlName(HOST)
+                    .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+                    .build();
+
+    protected static final SimpleAttributeDefinition AUTH_METHOD_DEF =
+            new SimpleAttributeDefinitionBuilder(AUTH_METHOD, ModelType.STRING)
+                    .setRequired(false)
+                    .setDefaultValue(new ModelNode("token"))
+                    .setAllowExpression(true)
+                    .setXmlName(AUTH_METHOD)
+                    .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+                    .build();
+
+    protected static final SimpleAttributeDefinition TLS_VERIFY_DEF =
+            new SimpleAttributeDefinitionBuilder(TLS_VERIFY, ModelType.BOOLEAN)
+                    .setRequired(false)
+                    .setDefaultValue(new ModelNode(true))
+                    .setAllowExpression(true)
+                    .setXmlName(TLS_VERIFY)
+                    .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+                    .build();
+
+    protected static final SimpleAttributeDefinition NAMESPACE_DEF =
+            new SimpleAttributeDefinitionBuilder(NAMESPACE, ModelType.STRING)
+                    .setRequired(false)
+                    .setAllowExpression(true)
+                    .setXmlName(NAMESPACE)
+                    .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+                    .build();
+
+    protected static final SimpleAttributeDefinition TOKEN_DEF =
+            new SimpleAttributeDefinitionBuilder(TOKEN, ModelType.STRING)
+                    .setRequired(false)
+                    .setAllowExpression(true)
+                    .setXmlName(TOKEN)
                     .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
                     .build();
 
@@ -34,7 +71,6 @@ public class VaultSubsystemDefinition extends SimpleResourceDefinition {
                 VaultSubsystemRegistrar.RESOLVER,
                 VaultSubsystemAdd.INSTANCE,
                 VaultSubsystemRemove.INSTANCE);
-        setDeprecated(ModelVersion.create(3,0,0));
     }
 
     /**
@@ -50,7 +86,11 @@ public class VaultSubsystemDefinition extends SimpleResourceDefinition {
 
     @Override
     public void registerAttributes(ManagementResourceRegistration resourceRegistration) {
-        resourceRegistration.registerReadWriteAttribute(HOST_NAME, null, new ReloadRequiredWriteAttributeHandler(HOST_NAME));
-        // other definitions here...
+        resourceRegistration.registerReadWriteAttribute(HOST_NAME_DEF, null, new ReloadRequiredWriteAttributeHandler(HOST_NAME_DEF));
+        resourceRegistration.registerReadWriteAttribute(AUTH_METHOD_DEF, null, new ReloadRequiredWriteAttributeHandler(AUTH_METHOD_DEF));
+        resourceRegistration.registerReadWriteAttribute(NAMESPACE_DEF, null, new ReloadRequiredWriteAttributeHandler(NAMESPACE_DEF));
+        resourceRegistration.registerReadWriteAttribute(TLS_VERIFY_DEF, null, new ReloadRequiredWriteAttributeHandler(TLS_VERIFY_DEF));
+        resourceRegistration.registerReadWriteAttribute(TOKEN_DEF, null, new ReloadRequiredWriteAttributeHandler(TOKEN_DEF));
+        //TODO: other definitions here...
     }
 }

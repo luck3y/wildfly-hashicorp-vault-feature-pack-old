@@ -5,7 +5,7 @@
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
             targetNamespace="urn:wildfly:hashicorp-vault:experimental:1.0"
-            xmlns="urn:wildfly:hashicorp-vault:experimental:1.0"
+            xmlns="urn:wildfly:hashicorp-vault:experimental:1."
             elementFormDefault="qualified"
             attributeFormDefault="unqualified"
             version="1.0">

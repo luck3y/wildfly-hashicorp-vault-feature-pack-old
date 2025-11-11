@@ -19,7 +19,6 @@ import org.jboss.as.controller.persistence.xml.SubsystemResourceXMLSchema;
 import org.jboss.as.controller.xml.VersionedNamespace;
 import org.jboss.as.version.Stability;
 import org.jboss.staxmapper.IntVersion;
-import org.wildfly.extension.hashicorp.vault.model.VaultConnectionDefinition;
 import org.wildfly.subsystem.SubsystemConfiguration;
 import org.wildfly.subsystem.SubsystemExtension;
 import org.wildfly.subsystem.SubsystemPersistence;
@@ -74,12 +73,6 @@ public final class VaultExtension extends SubsystemExtension<VaultExtension.Vaul
     public static PathElement createPath(String name) {
         return PathElement.pathElement(name);
     }
-
-//    public static StandardResourceDescriptionResolver getResourceDescriptionResolver(final String keyPrefix) {
-//        String prefix = SUBSYSTEM_NAME + (keyPrefix == null ? "" : "." + keyPrefix);
-//        System.out.println("XXX: " + RESOURCE_NAME);
-//        return new StandardResourceDescriptionResolver(prefix, RESOURCE_NAME, VaultExtension.class.getClassLoader(), true, false);
-//    }
 
     public void initialize(ExtensionContext context) {
         final SubsystemRegistration subsystem = context.registerSubsystem(SUBSYSTEM_NAME, CURRENT_MODEL_VERSION);

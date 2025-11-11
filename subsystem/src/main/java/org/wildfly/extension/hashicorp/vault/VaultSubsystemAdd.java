@@ -14,6 +14,7 @@ public class VaultSubsystemAdd extends AbstractAddStepHandler {
     public static final VaultSubsystemAdd INSTANCE = new VaultSubsystemAdd();
     
     private VaultSubsystemAdd() {
+        // TODDO: add capability
         //super(VaultSubsystemDefinition.VAULT_CAPABILITY);
     }
     
