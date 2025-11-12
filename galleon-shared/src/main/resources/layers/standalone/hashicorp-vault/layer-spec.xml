@@ -10,6 +10,7 @@
       <prop name="org.wildfly.description" value="Support for HashiCorp Vault"/>
     </props>
     <dependencies>
+        <layer name="elytron"/>
     </dependencies>
     <feature-group name="hashicorp-vault"/>
 </layer-spec>
