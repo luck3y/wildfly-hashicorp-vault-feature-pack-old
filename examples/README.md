@@ -6,17 +6,33 @@
 2. **Vault Token**: A valid token with appropriate permissions, see the HashiCorp documentation for details: https://developer.hashicorp.com/vault/docs
 3. **WildFly**: WildFly 36+ with the HashiCorp Vault subsystem feature pack installed
 
-## Quick Start
+## Using the Feature Pack:
+
+#### 1. Build and install the feature pack with maven
+```bash
+mvn clean install
+```
+#### 2. Provision a WildFly server with the feature pack. Download the latest version of the galleon tools from https://github.com/wildfly/galleon/releases . The example below assumes you have unzipped galleon in a ~/Downloads/galleon directory:
+```bash
+~Downloads/galleon/bin/galleon.sh install org.wildfly:wildfly-hashicorp-vault-feature-pack:1.0.0.Alpha-SNAPSHOT --layers=hashicorp-vault  --dir=wildfly
+```
+
+#### 3. Start WildFly
+```bash
+./wildfly/bin/standalone.sh --stability=experimental
+```
+
+## HashiCorp Vault Quick Start
 
 ### 1. Start HashiCorp Vault (Development Mode)
 ```bash
 vault server -dev -dev-root-token-id="myroot"
-
+```
 2. Set Environment Variables
 ```bash
 export VAULT_TOKEN="myroot"
 export VAULT_ADDR="http://localhost:8200"
-
+```
 3. Store Some Secrets
 bash# Database credentials
 vault kv put secret/database/prod username=dbuser password=secretpass
